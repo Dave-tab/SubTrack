@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SubTrack — Subscription Tracker & Manager</title>
+  <meta name="description" content="A clean, private tool to track recurring subscriptions, see your spending snapshot, and get simple tips to save money." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316274F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect width='20' height='14' x='2' y='5' rx='2'/><path d='M2 10h20'/></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Landing Page Section -->
+  <div id="landingView" class="landing-view">
+    <header class="landing-hero">
+      <div class="logo-area-landing">
+        <svg class="logo-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+        <h1 class="landing-title">SubTrack</h1>
+      </div>
+      <p class="landing-pitch">Take control of your recurring bills. See all your subscriptions in one calm place, catch forgotten renewals, and optimize your monthly spending effortlessly.</p>
+      <button type="button" id="getStartedBtn" class="btn btn-primary btn-lg">Get Started Free</button>
+    </header>
+
+    <section class="landing-features">
+      <div class="feature-card card">
+        <h3>Track Everything</h3>
+        <p>Keep tabs on monthly, yearly, and weekly bills in Naira (₦), Dollars ($), Euros (€), and Pounds (£).</p>
+      </div>
+      <div class="feature-card card">
+        <h3>Smart Insights</h3>
+        <p>Automatic recommendations, health scores, and cancel candidates to help you cut unnecessary expenses.</p>
+      </div>
+      <div class="feature-card card">
+        <h3>100% Private</h3>
+        <p>No backend, no accounts, and no data tracking. Everything stays securely in your browser's local storage.</p>
+      </div>
+    </section>
+
+    <footer class="landing-footer">
+      <button type="button" id="getStartedBtnFooter" class="btn btn-secondary">Launch SubTrack</button>
+    </footer>
+  </div>
+
+  <!-- App View Section -->
+  <div id="appView" class="app-view hidden">
+    <!-- Skeleton Loading State -->
+    <div id="skeletonLoader" class="skeleton-loader hidden">
+      <div class="skeleton-header"></div>
+      <div class="skeleton-grid"></div>
+    </div>
+
+    <div class="app-layout">
+      <!-- Sidebar Navigation -->
+      <aside id="appSidebar" class="sidebar">
+        <div class="sidebar-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
+          <span class="sidebar-brand-name">SubTrack</span>
+        </div>
+        <nav class="sidebar-nav">
+          <button type="button" class="sidebar-link active" data-target="dashboardSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Dashboard
+          </button>
+          <button type="button" class="sidebar-link" data-target="gridSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            Subscriptions
+          </button>
+          <button type="button" class="sidebar-link" data-target="formSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Add New
+          </button>
+          <button type="button" class="sidebar-link" data-target="recommendationsSection">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            Insights
+          </button>
+          <button type="button" class="sidebar-link" data-target="snapshotCard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Snapshot
+          </button>
+        </nav>
+        <div class="sidebar-footer">
+          <button type="button" id="sidebarSettingsBtn" class="btn btn-secondary btn-sm sidebar-settings-btn">⚙️ Settings</button>
+        </div>
+      </aside>
+
+      <!-- Mobile Sidebar Backdrop Overlay -->
+      <div id="sidebarOverlay" class="sidebar-overlay hidden"></div>
+
+      <!-- Main Content Wrapper -->
+      <div class="main-wrapper">
+        <!-- Top Navigation Bar -->
+        <header class="top-navbar">
+          <div class="navbar-left">
+            <button type="button" id="hamburgerBtn" class="hamburger-btn" aria-label="Toggle Menu">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+            <p id="greetingText" class="app-greeting">Hey there, here's your subscription snapshot.</p>
+          </div>
+          <div class="navbar-controls">
+            <button type="button" id="themeToggleBtn" class="btn btn-secondary btn-sm" title="Toggle Light/Dark Mode">🌓 Theme</button>
+            <select id="globalCurrency" class="currency-select" aria-label="Currency Selector">
+              <option value="NGN">₦ NGN</option>
+              <option value="USD">$ USD</option>
+              <option value="EUR">€ EUR</option>
+              <option value="GBP">£ GBP</option>
+            </select>
+            <button type="button" id="settingsBtn" class="btn btn-secondary btn-sm">⚙️ Settings</button>
+          </div>
+        </header>
+
+        <div class="content-scroll-area">
+          <!-- 5. Payment-due-soon reminder banner -->
+          <div id="dueSoonBanner" class="due-soon-banner hidden">
+            <span class="banner-icon">🔔</span>
+            <span id="dueSoonText">You have a subscription renewing soon!</span>
+          </div>
+
+          <!-- 15. Milestone Celebration Banner -->
+          <div id="milestoneBanner" class="milestone-banner hidden">
+            <span class="banner-icon">🎉</span>
+            <span id="milestoneText">Nice — that's money back in your pocket!</span>
+          </div>
+
+          <main class="main-content">
+            <!-- Settings Modal / Drawer (Personalization) -->
+            <div id="settingsModal" class="settings-modal card hidden">
+              <div class="settings-header">
+                <h3>Personalize SubTrack</h3>
+                <button type="button" id="closeSettingsBtn" class="btn btn-secondary btn-sm">Close</button>
+              </div>
+              <div class="settings-body">
+                <div class="form-group">
+                  <label for="userNameInput">Your Name (Optional)</label>
+                  <input type="text" id="userNameInput" placeholder="e.g. Dave">
+                </div>
+                <div class="form-group">
+                  <label for="monthlyBudgetInput">Monthly Spending Budget (<span class="currency-symbol">₦</span>)</label>
+                  <input type="number" id="monthlyBudgetInput" step="1000" placeholder="e.g. 50000">
+                </div>
+                <button type="button" id="saveSettingsBtn" class="btn btn-primary btn-sm">Save Preferences</button>
+              </div>
+            </div>
+
+            <!-- 6. Add / Edit Subscription Form -->
+            <section class="card form-section" id="formSection">
+              <div class="form-header">
+                <h2 id="formTitle" class="section-title">Add New Subscription</h2>
+                <button type="button" id="cancelEditBtn" class="btn btn-secondary hidden">Cancel Edit</button>
+              </div>
+              <form id="subForm" novalidate>
+                <input type="hidden" id="subId">
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="subName">Subscription Name <span class="required">*</span></label>
+                    <input type="text" id="subName" placeholder="e.g. Netflix, Spotify, AWS" required>
+                    <span class="error-msg" id="errorName">Please enter a name.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="subCost">Cost & Currency <span class="required">*</span></label>
+                    <div class="cost-currency-wrapper">
+                      <input type="number" id="subCost" step="0.01" min="0.01" placeholder="5000" required>
+                      <select id="subCurrency" aria-label="Subscription Currency">
+                        <option value="NGN" selected>₦ NGN</option>
+                        <option value="USD">$ USD</option>
+                        <option value="EUR">€ EUR</option>
+                        <option value="GBP">£ GBP</option>
+                      </select>
+                    </div>
+                    <span class="error-msg" id="errorCost">Please enter a positive cost.</span>
+                  </div>
+                  <div class="form-group">
+                    <label for="subCycle">Billing Cycle <span class="required">*</span></label>
+                    <select id="subCycle" required>
+                      <option value="monthly">Monthly</option>
+                      <option value="yearly">Yearly</option>
+                      <option value="weekly">Weekly</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="subCategory">Category <span class="required">*</span></label>
+                    <select id="subCategory" required>
+                      <!-- Populated dynamically with built-ins + custom categories -->
+                    </select>
+                    <input type="text" id="customCategoryInput" class="hidden mt-2" placeholder="Enter custom category name">
+                  </div>
+                  <div class="form-group">
+                    <label for="subPriority">Priority Tag</label>
+                    <select id="subPriority">
+                      <option value="Must-have" selected>Must-have</option>
+                      <option value="Nice-to-have">Nice-to-have</option>
+                      <option value="Reconsidering">Reconsidering</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="subTrialDate">Trial End Date (Optional)</label>
+                    <input type="date" id="subTrialDate">
+                  </div>
+                  <div class="form-group">
+                    <label for="subDate">Next Payment Date (Optional)</label>
+                    <input type="date" id="subDate">
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button type="submit" id="submitBtn" class="btn btn-primary">Add Subscription</button>
+                </div>
+              </form>
+            </section>
+
+            <!-- 17. Empty State -->
+            <div id="emptyState" class="empty-state hidden">
+              <div class="empty-illustration">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <h3>No subscriptions tracked yet</h3>
+              <p>Add your first recurring subscription above to calculate your burn rate, track renewals, and get smart optimization tips.</p>
+            </div>
+
+            <!-- 7 & 8. Dashboard Summary & Budget Goal -->
+            <section id="dashboardSection" class="dashboard-section">
+              <!-- Budget Goal Progress Bar -->
+              <div id="budgetSection" class="budget-card card hidden">
+                <div class="budget-header">
+                  <span>Monthly Budget Goal</span>
+                  <span id="budgetStatusText">$0 / $0</span>
+                </div>
+                <div class="breakdown-bar-bg">
+                  <div id="budgetBarFill" class="breakdown-bar-fill" style="width: 0%"></div>
+                </div>
+              </div>
+
+              <div class="metrics-grid">
+                <div class="metric-card card">
+                  <span class="metric-label">Monthly Equivalent</span>
+                  <span class="metric-value" id="totalMonthly">0.00</span>
+                  <span class="metric-sub" id="activeCount">0 active subscriptions</span>
+                </div>
+                <div class="metric-card card">
+                  <span class="metric-label">Yearly Equivalent</span>
+                  <span class="metric-value" id="totalYearly">0.00</span>
+                  <span class="metric-sub">Projected annual spend</span>
+                </div>
+                <div class="metric-card card health-metric-card">
+                  <span class="metric-label">Subscription Health Score</span>
+                  <div class="health-score-wrapper">
+                    <svg class="health-ring" width="60" height="60" viewBox="0 0 36 36">
+                      <path class="ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path id="healthRingFill" class="ring-fill" stroke-dasharray="85, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div class="health-score-val" id="healthScoreNum">85</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sparkline & Renewal Strip -->
+              <div class="dashboard-extras-grid">
+                <div class="card sparkline-card">
+                  <h4>Spending Trend (Last 6 Months)</h4>
+                  <div class="sparkline-container">
+                    <svg id="sparklineSvg" width="100%" height="60" viewBox="0 0 300 60" preserveAspectRatio="none">
+                      <path id="sparklinePath" d="M0 50 Q 75 20, 150 40 T 300 10" fill="none" stroke="currentColor" stroke-width="3"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="card calendar-strip-card">
+                  <h4>Next 30 Days Renewal Strip</h4>
+                  <div id="renewalStrip" class="renewal-strip">
+                    <!-- Populated by JS -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="breakdown-card card">
+                <h3 class="subsection-title">Category Breakdown</h3>
+                <div id="categoryBreakdown" class="category-breakdown-list">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- 9. Shareable Spending Snapshot Card -->
+              <div class="snapshot-card card" id="snapshotCard">
+                <div class="snapshot-header">
+                  <div>
+                    <span class="snapshot-tag">Spending Snapshot</span>
+                    <h3 id="snapshotTitle">My Subscriptions Overview</h3>
+                  </div>
+                  <div class="snapshot-actions">
+                    <button type="button" id="copySnapshotBtn" class="btn btn-secondary btn-sm">Copy Summary</button>
+                    <button type="button" id="downloadSnapshotImgBtn" class="btn btn-secondary btn-sm">Download Image</button>
+                  </div>
+                </div>
+                <div class="snapshot-body" id="snapshotBody">
+                  <!-- populated by JS -->
+                </div>
+                <div id="copyToast" class="copy-toast hidden">Copied summary to clipboard!</div>
+              </div>
+            </section>
+
+            <!-- 10. Cancel Candidates Panel -->
+            <section id="cancelCandidatesSection" class="cancel-candidates-section card hidden">
+              <div class="rec-header">
+                <span class="rec-icon">⚠️</span>
+                <h3>Suggested Cancel Candidates</h3>
+              </div>
+              <div id="cancelCandidatesList" class="recommendations-list">
+                <!-- Populated by rules -->
+              </div>
+            </section>
+
+            <!-- 11. Search & Sort Controls -->
+            <div id="controlsBar" class="controls-bar card">
+              <div class="search-wrapper">
+                <input type="text" id="searchInput" placeholder="Search subscriptions by name...">
+              </div>
+              <div class="sort-wrapper">
+                <label for="sortSelect">Sort by:</label>
+                <select id="sortSelect">
+                  <option value="name">Name (A-Z)</option>
+                  <option value="cost-desc">Cost (High to Low)</option>
+                  <option value="cost-asc">Cost (Low to High)</option>
+                  <option value="date">Next Renewal Date</option>
+                </select>
+              </div>
+              <button type="button" id="exportCsvBtn" class="btn btn-secondary btn-sm">📥 Export CSV</button>
+            </div>
+
+            <!-- 12. Subscriptions Grid (Cards) -->
+            <section id="gridSection" class="grid-section">
+              <div class="section-heading">
+                <h2>Active Subscriptions</h2>
+                <span class="badge" id="subCountBadge">0</span>
+              </div>
+              <div id="subscriptionsGrid" class="subscriptions-grid">
+                <!-- Cards populated here -->
+              </div>
+            </section>
+
+            <!-- 14. Recommendations Panel -->
+            <section id="recommendationsSection" class="recommendations-section card">
+              <div class="rec-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                <h3>Smart Insights & Annual Savings Tips</h3>
+              </div>
+              <div id="recommendationsList" class="recommendations-list">
+                <!-- Populated by heuristics -->
+              </div>
+            </section>
+          </main>
+
+          <footer class="footer">
+            <p>&copy; Designed & Developed by | DAYAN. Data stored securely in your browser.</p>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

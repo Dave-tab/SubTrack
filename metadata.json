@@ -1,0 +1,6 @@
+{
+  "name": "SubTrack",
+  "description": "A clean, private tool to track monthly and yearly subscription spend, identify financial overlap, and stay in control of recurring bills.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
