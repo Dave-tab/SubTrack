@@ -32,75 +32,88 @@ let editingId = null;
 let draggedCardId = null;
 
 // DOM Elements
-const landingView = document.getElementById('landingView');
-const appView = document.getElementById('appView');
-const skeletonLoader = document.getElementById('skeletonLoader');
-const getStartedBtn = document.getElementById('getStartedBtn');
-const getStartedBtnFooter = document.getElementById('getStartedBtnFooter');
+let landingView, appView, skeletonLoader, getStartedBtn, getStartedBtnFooter;
+let themeToggleBtn, globalCurrency, settingsBtn, settingsModal, closeSettingsBtn, saveSettingsBtn, userNameInput, monthlyBudgetInput, greetingText;
+let dueSoonBanner, dueSoonText, milestoneBanner, milestoneText;
+let subForm, formTitle, submitBtn, cancelEditBtn, subIdInput, subNameInput, subCostInput, subCurrencyInput, subCycleInput, subCategoryInput, customCategoryInput, subPriorityInput, subTrialDateInput, subDateInput;
+let emptyState, dashboardSection, budgetSection, budgetStatusText, budgetBarFill;
+let totalMonthlyEl, totalYearlyEl, activeCountEl, healthScoreNum, healthRingFill, sparklinePath, renewalStrip, categoryBreakdownEl;
+let snapshotBody, copySnapshotBtn, downloadSnapshotImgBtn, copyToast;
+let cancelCandidatesSection, cancelCandidatesList;
+let controlsBar, searchInput, sortSelect, exportCsvBtn;
+let gridSection, subCountBadge, subscriptionsGrid, recommendationsSection, recommendationsList;
 
-const themeToggleBtn = document.getElementById('themeToggleBtn');
-const globalCurrency = document.getElementById('globalCurrency');
-const settingsBtn = document.getElementById('settingsBtn');
-const settingsModal = document.getElementById('settingsModal');
-const closeSettingsBtn = document.getElementById('closeSettingsBtn');
-const saveSettingsBtn = document.getElementById('saveSettingsBtn');
-const userNameInput = document.getElementById('userNameInput');
-const monthlyBudgetInput = document.getElementById('monthlyBudgetInput');
-const greetingText = document.getElementById('greetingText');
+function initDOMElements() {
+  landingView = document.getElementById('landingView');
+  appView = document.getElementById('appView');
+  skeletonLoader = document.getElementById('skeletonLoader');
+  getStartedBtn = document.getElementById('getStartedBtn');
+  getStartedBtnFooter = document.getElementById('getStartedBtnFooter');
 
-const dueSoonBanner = document.getElementById('dueSoonBanner');
-const dueSoonText = document.getElementById('dueSoonText');
-const milestoneBanner = document.getElementById('milestoneBanner');
-const milestoneText = document.getElementById('milestoneText');
+  themeToggleBtn = document.getElementById('themeToggleBtn');
+  globalCurrency = document.getElementById('globalCurrency');
+  settingsBtn = document.getElementById('settingsBtn');
+  settingsModal = document.getElementById('settingsModal');
+  closeSettingsBtn = document.getElementById('closeSettingsBtn');
+  saveSettingsBtn = document.getElementById('saveSettingsBtn');
+  userNameInput = document.getElementById('userNameInput');
+  monthlyBudgetInput = document.getElementById('monthlyBudgetInput');
+  greetingText = document.getElementById('greetingText');
 
-const subForm = document.getElementById('subForm');
-const formTitle = document.getElementById('formTitle');
-const submitBtn = document.getElementById('submitBtn');
-const cancelEditBtn = document.getElementById('cancelEditBtn');
-const subIdInput = document.getElementById('subId');
-const subNameInput = document.getElementById('subName');
-const subCostInput = document.getElementById('subCost');
-const subCurrencyInput = document.getElementById('subCurrency');
-const subCycleInput = document.getElementById('subCycle');
-const subCategoryInput = document.getElementById('subCategory');
-const customCategoryInput = document.getElementById('customCategoryInput');
-const subPriorityInput = document.getElementById('subPriority');
-const subTrialDateInput = document.getElementById('subTrialDate');
-const subDateInput = document.getElementById('subDate');
+  dueSoonBanner = document.getElementById('dueSoonBanner');
+  dueSoonText = document.getElementById('dueSoonText');
+  milestoneBanner = document.getElementById('milestoneBanner');
+  milestoneText = document.getElementById('milestoneText');
 
-const emptyState = document.getElementById('emptyState');
-const dashboardSection = document.getElementById('dashboardSection');
-const budgetSection = document.getElementById('budgetSection');
-const budgetStatusText = document.getElementById('budgetStatusText');
-const budgetBarFill = document.getElementById('budgetBarFill');
+  subForm = document.getElementById('subForm');
+  formTitle = document.getElementById('formTitle');
+  submitBtn = document.getElementById('submitBtn');
+  cancelEditBtn = document.getElementById('cancelEditBtn');
+  subIdInput = document.getElementById('subId');
+  subNameInput = document.getElementById('subName');
+  subCostInput = document.getElementById('subCost');
+  subCurrencyInput = document.getElementById('subCurrency');
+  subCycleInput = document.getElementById('subCycle');
+  subCategoryInput = document.getElementById('subCategory');
+  customCategoryInput = document.getElementById('customCategoryInput');
+  subPriorityInput = document.getElementById('subPriority');
+  subTrialDateInput = document.getElementById('subTrialDate');
+  subDateInput = document.getElementById('subDate');
 
-const totalMonthlyEl = document.getElementById('totalMonthly');
-const totalYearlyEl = document.getElementById('totalYearly');
-const activeCountEl = document.getElementById('activeCount');
-const healthScoreNum = document.getElementById('healthScoreNum');
-const healthRingFill = document.getElementById('healthRingFill');
-const sparklinePath = document.getElementById('sparklinePath');
-const renewalStrip = document.getElementById('renewalStrip');
-const categoryBreakdownEl = document.getElementById('categoryBreakdown');
+  emptyState = document.getElementById('emptyState');
+  dashboardSection = document.getElementById('dashboardSection');
+  budgetSection = document.getElementById('budgetSection');
+  budgetStatusText = document.getElementById('budgetStatusText');
+  budgetBarFill = document.getElementById('budgetBarFill');
 
-const snapshotBody = document.getElementById('snapshotBody');
-const copySnapshotBtn = document.getElementById('copySnapshotBtn');
-const downloadSnapshotImgBtn = document.getElementById('downloadSnapshotImgBtn');
-const copyToast = document.getElementById('copyToast');
+  totalMonthlyEl = document.getElementById('totalMonthly');
+  totalYearlyEl = document.getElementById('totalYearly');
+  activeCountEl = document.getElementById('activeCount');
+  healthScoreNum = document.getElementById('healthScoreNum');
+  healthRingFill = document.getElementById('healthRingFill');
+  sparklinePath = document.getElementById('sparklinePath');
+  renewalStrip = document.getElementById('renewalStrip');
+  categoryBreakdownEl = document.getElementById('categoryBreakdown');
 
-const cancelCandidatesSection = document.getElementById('cancelCandidatesSection');
-const cancelCandidatesList = document.getElementById('cancelCandidatesList');
+  snapshotBody = document.getElementById('snapshotBody');
+  copySnapshotBtn = document.getElementById('copySnapshotBtn');
+  downloadSnapshotImgBtn = document.getElementById('downloadSnapshotImgBtn');
+  copyToast = document.getElementById('copyToast');
 
-const controlsBar = document.getElementById('controlsBar');
-const searchInput = document.getElementById('searchInput');
-const sortSelect = document.getElementById('sortSelect');
-const exportCsvBtn = document.getElementById('exportCsvBtn');
+  cancelCandidatesSection = document.getElementById('cancelCandidatesSection');
+  cancelCandidatesList = document.getElementById('cancelCandidatesList');
 
-const gridSection = document.getElementById('gridSection');
-const subCountBadge = document.getElementById('subCountBadge');
-const subscriptionsGrid = document.getElementById('subscriptionsGrid');
-const recommendationsSection = document.getElementById('recommendationsSection');
-const recommendationsList = document.getElementById('recommendationsList');
+  controlsBar = document.getElementById('controlsBar');
+  searchInput = document.getElementById('searchInput');
+  sortSelect = document.getElementById('sortSelect');
+  exportCsvBtn = document.getElementById('exportCsvBtn');
+
+  gridSection = document.getElementById('gridSection');
+  subCountBadge = document.getElementById('subCountBadge');
+  subscriptionsGrid = document.getElementById('subscriptionsGrid');
+  recommendationsSection = document.getElementById('recommendationsSection');
+  recommendationsList = document.getElementById('recommendationsList');
+}
 
 // Load & Save State
 function loadState() {
@@ -633,16 +646,16 @@ function escapeHtml(str) {
 function bindEvents() {
   const enterApp = () => {
     sessionStorage.setItem(STORAGE_KEY_LANDING, 'true');
-    landingView.classList.add('hidden');
-    skeletonLoader.classList.remove('hidden');
-    appView.classList.remove('hidden');
+    if (landingView) landingView.classList.add('hidden');
+    if (skeletonLoader) skeletonLoader.classList.remove('hidden');
+    if (appView) appView.classList.remove('hidden');
     setTimeout(() => {
-      skeletonLoader.classList.add('hidden');
+      if (skeletonLoader) skeletonLoader.classList.add('hidden');
       renderApp();
     }, 400);
   };
-  getStartedBtn.addEventListener('click', enterApp);
-  getStartedBtnFooter.addEventListener('click', enterApp);
+  if (getStartedBtn) getStartedBtn.addEventListener('click', enterApp);
+  if (getStartedBtnFooter) getStartedBtnFooter.addEventListener('click', enterApp);
 
   const sidebarLogo = document.querySelector('.sidebar-logo');
   if (sidebarLogo) {
@@ -650,16 +663,18 @@ function bindEvents() {
     sidebarLogo.title = 'Back to Landing Page';
     sidebarLogo.addEventListener('click', () => {
       sessionStorage.removeItem(STORAGE_KEY_LANDING);
-      appView.classList.add('hidden');
-      landingView.classList.remove('hidden');
+      if (appView) appView.classList.add('hidden');
+      if (landingView) landingView.classList.remove('hidden');
     });
   }
 
-  themeToggleBtn.addEventListener('click', () => {
-    settings.darkMode = !settings.darkMode;
-    saveState();
-    applyTheme();
-  });
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      settings.darkMode = !settings.darkMode;
+      saveState();
+      applyTheme();
+    });
+  }
 
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const appSidebar = document.getElementById('appSidebar');
@@ -677,10 +692,10 @@ function bindEvents() {
 
   if (sidebarSettingsBtn) {
     sidebarSettingsBtn.addEventListener('click', () => {
-      userNameInput.value = settings.name || '';
-      monthlyBudgetInput.value = settings.budget || '';
-      settingsModal.classList.toggle('hidden');
-      if (window.innerWidth < 1024) {
+      if (userNameInput) userNameInput.value = settings.name || '';
+      if (monthlyBudgetInput) monthlyBudgetInput.value = settings.budget || '';
+      if (settingsModal) settingsModal.classList.toggle('hidden');
+      if (window.innerWidth < 1024 && appSidebar && sidebarOverlay) {
         appSidebar.classList.remove('open');
         sidebarOverlay.classList.add('hidden');
       }
@@ -696,7 +711,7 @@ function bindEvents() {
       if (targetEl) {
         targetEl.scrollIntoView({ behavior: 'smooth' });
       }
-      if (window.innerWidth < 1024) {
+      if (window.innerWidth < 1024 && appSidebar && sidebarOverlay) {
         appSidebar.classList.remove('open');
         sidebarOverlay.classList.add('hidden');
       }
@@ -739,218 +754,245 @@ function bindEvents() {
     if (el) sectionObserver.observe(el);
   });
 
-  globalCurrency.addEventListener('change', (e) => {
-    settings.currency = e.target.value;
-    saveState();
-    renderApp();
-  });
-
-  settingsBtn.addEventListener('click', () => {
-    userNameInput.value = settings.name || '';
-    monthlyBudgetInput.value = settings.budget || '';
-    settingsModal.classList.toggle('hidden');
-  });
-  closeSettingsBtn.addEventListener('click', () => settingsModal.classList.add('hidden'));
-  saveSettingsBtn.addEventListener('click', () => {
-    settings.name = userNameInput.value.trim();
-    settings.budget = parseFloat(monthlyBudgetInput.value) || 0;
-    saveState();
-    settingsModal.classList.add('hidden');
-    renderApp();
-  });
-
-  subCategoryInput.addEventListener('change', (e) => {
-    if (e.target.value === 'ADD_NEW') {
-      customCategoryInput.classList.remove('hidden');
-      customCategoryInput.focus();
-    } else {
-      customCategoryInput.classList.add('hidden');
-      customCategoryInput.value = '';
-    }
-  });
-
-  subForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let isValid = true;
-    const nameVal = subNameInput.value.trim();
-    const costVal = parseFloat(subCostInput.value);
-
-    const nameGroup = subNameInput.closest('.form-group');
-    const costGroup = subCostInput.closest('.form-group');
-
-    if (!nameVal) { nameGroup.classList.add('invalid'); isValid = false; } else { nameGroup.classList.remove('invalid'); }
-    if (isNaN(costVal) || costVal <= 0) { costGroup.classList.add('invalid'); isValid = false; } else { costGroup.classList.remove('invalid'); }
-    if (!isValid) return;
-
-    let catVal = subCategoryInput.value;
-    if (catVal === 'ADD_NEW') {
-      const customCat = customCategoryInput.value.trim();
-      if (customCat) {
-        if (!settings.customCategories) settings.customCategories = [];
-        if (!settings.customCategories.includes(customCat) && !DEFAULT_CATEGORIES.includes(customCat)) {
-          settings.customCategories.push(customCat);
-        }
-        catVal = customCat;
-      } else {
-        catVal = 'Other';
-      }
-    }
-
-    const formData = {
-      name: nameVal,
-      cost: costVal,
-      currency: subCurrencyInput.value,
-      cycle: subCycleInput.value,
-      category: catVal,
-      priority: subPriorityInput.value,
-      trialEndDate: subTrialDateInput.value || null,
-      nextPaymentDate: subDateInput.value || null
-    };
-
-    if (editingId) {
-      editSubscription(editingId, formData);
-      resetForm();
-    } else {
-      addSubscription(formData);
-      subForm.reset();
-      customCategoryInput.classList.add('hidden');
-    }
-  });
-
-  cancelEditBtn.addEventListener('click', () => resetForm());
-
-  searchInput.addEventListener('input', () => renderApp());
-  sortSelect.addEventListener('change', () => renderApp());
-  exportCsvBtn.addEventListener('click', () => {
-    let csvContent = "data:text/csv;charset=utf-8,Name,Cost,Currency,Cycle,Category,Priority,NextPaymentDate,Paused\n";
-    subscriptions.forEach(s => {
-      csvContent += `"${s.name}",${s.cost},${s.currency || 'NGN'},${s.cycle},"${s.category}","${s.priority}",${s.nextPaymentDate || ''},${s.paused}\n`;
-    });
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "subtrack_export.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  });
-
-  subscriptionsGrid.addEventListener('click', (e) => {
-    const target = e.target;
-    const card = target.closest('.sub-card');
-    if (!card) return;
-    const id = card.getAttribute('data-id');
-
-    const editBtn = target.classList.contains('edit-btn') ? target : target.closest('.edit-btn');
-    if (editBtn) {
-      const sub = subscriptions.find(s => s.id === id);
-      if (sub) {
-        editingId = sub.id;
-        subIdInput.value = sub.id;
-        subNameInput.value = sub.name;
-        subCostInput.value = sub.cost;
-        subCurrencyInput.value = sub.currency || 'NGN';
-        subCycleInput.value = sub.cycle;
-        
-        const allCats = [...DEFAULT_CATEGORIES, ...(settings.customCategories || [])];
-        if (!allCats.includes(sub.category)) {
-          settings.customCategories.push(sub.category);
-          updateCategoryDropdown();
-        }
-        subCategoryInput.value = sub.category;
-        customCategoryInput.classList.add('hidden');
-
-        subPriorityInput.value = sub.priority || 'Must-have';
-        subTrialDateInput.value = sub.trialEndDate || '';
-        subDateInput.value = sub.nextPaymentDate || '';
-
-        formTitle.textContent = 'Edit Subscription';
-        submitBtn.textContent = 'Save Changes';
-        cancelEditBtn.classList.remove('hidden');
-        document.getElementById('formSection').scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    if (target.classList.contains('pause-btn')) {
-      togglePauseSubscription(id);
-    }
-
-    if (target.classList.contains('delete-prompt-btn')) {
-      card.classList.add('delete-confirm');
-      const sub = subscriptions.find(s => s.id === id);
-      card.innerHTML = `
-        <div class="delete-confirm-content">
-          <p>Delete "${escapeHtml(sub ? sub.name : 'this item')}"?</p>
-          <div class="delete-confirm-actions">
-            <button type="button" class="btn btn-danger btn-sm confirm-yes" data-id="${id}">Yes, Delete</button>
-            <button type="button" class="btn btn-secondary btn-sm confirm-no" data-id="${id}">Cancel</button>
-          </div>
-        </div>
-      `;
-    }
-
-    if (target.classList.contains('confirm-yes')) {
-      deleteSubscription(id);
-      if (editingId === id) resetForm();
-    }
-
-    if (target.classList.contains('confirm-no')) {
+  if (globalCurrency) {
+    globalCurrency.addEventListener('change', (e) => {
+      settings.currency = e.target.value;
+      saveState();
       renderApp();
-    }
-  });
-
-  cancelCandidatesList.addEventListener('click', (e) => {
-    if (e.target.classList.contains('pause-cand-btn')) {
-      const id = e.target.getAttribute('data-id');
-      togglePauseSubscription(id);
-    }
-  });
-
-  copySnapshotBtn.addEventListener('click', () => {
-    const text = snapshotBody.innerText;
-    navigator.clipboard.writeText(text).then(() => {
-      copyToast.classList.remove('hidden');
-      setTimeout(() => copyToast.classList.add('hidden'), 2000);
     });
-  });
+  }
 
-  downloadSnapshotImgBtn.addEventListener('click', () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = 600;
-    canvas.height = 300;
-    const ctx = canvas.getContext('2d');
+  if (settingsBtn) {
+    settingsBtn.addEventListener('click', () => {
+      if (userNameInput) userNameInput.value = settings.name || '';
+      if (monthlyBudgetInput) monthlyBudgetInput.value = settings.budget || '';
+      if (settingsModal) settingsModal.classList.toggle('hidden');
+    });
+  }
+  if (closeSettingsBtn) closeSettingsBtn.addEventListener('click', () => settingsModal && settingsModal.classList.add('hidden'));
+  if (saveSettingsBtn) {
+    saveSettingsBtn.addEventListener('click', () => {
+      if (userNameInput) settings.name = userNameInput.value.trim();
+      if (monthlyBudgetInput) settings.budget = parseFloat(monthlyBudgetInput.value) || 0;
+      saveState();
+      if (settingsModal) settingsModal.classList.add('hidden');
+      renderApp();
+    });
+  }
 
-    const grad = ctx.createLinearGradient(0, 0, 600, 300);
-    grad.addColorStop(0, settings.darkMode ? '#1E293B' : '#16274F');
-    grad.addColorStop(1, settings.darkMode ? '#0F172A' : '#24396B');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 600, 300);
+  if (subCategoryInput) {
+    subCategoryInput.addEventListener('change', (e) => {
+      if (e.target.value === 'ADD_NEW') {
+        if (customCategoryInput) {
+          customCategoryInput.classList.remove('hidden');
+          customCategoryInput.focus();
+        }
+      } else {
+        if (customCategoryInput) {
+          customCategoryInput.classList.add('hidden');
+          customCategoryInput.value = '';
+        }
+      }
+    });
+  }
 
-    ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 24px system-ui';
-    ctx.fillText('SubTrack Spending Snapshot', 40, 50);
+  if (subForm) {
+    subForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let isValid = true;
+      const nameVal = subNameInput ? subNameInput.value.trim() : '';
+      const costVal = subCostInput ? parseFloat(subCostInput.value) : NaN;
 
-    ctx.font = '16px system-ui';
-    ctx.fillStyle = '#E2E8F0';
-    const totals = calculateTotals(subscriptions);
-    const activeCount = subscriptions.filter(s => !s.paused).length;
-    const text1 = `Active Subscriptions: ${activeCount}`;
-    const text2 = `Monthly Spend: ${formatMoney(totals.monthly)}`;
-    const text3 = `Yearly Spend: ${formatMoney(totals.yearly)}`;
+      const nameGroup = subNameInput ? subNameInput.closest('.form-group') : null;
+      const costGroup = subCostInput ? subCostInput.closest('.form-group') : null;
 
-    ctx.fillText(text1, 40, 110);
-    ctx.fillText(text2, 40, 150);
-    ctx.fillText(text3, 40, 190);
+      if (!nameVal) { if (nameGroup) nameGroup.classList.add('invalid'); isValid = false; } else { if (nameGroup) nameGroup.classList.remove('invalid'); }
+      if (isNaN(costVal) || costVal <= 0) { if (costGroup) costGroup.classList.add('invalid'); isValid = false; } else { if (costGroup) costGroup.classList.remove('invalid'); }
+      if (!isValid) return;
 
-    ctx.font = 'italic 12px system-ui';
-    ctx.fillStyle = '#94A3B8';
-    ctx.fillText('Generated with SubTrack — Private Subscription Manager', 40, 260);
+      let catVal = subCategoryInput ? subCategoryInput.value : 'Other';
+      if (catVal === 'ADD_NEW') {
+        const customCat = customCategoryInput ? customCategoryInput.value.trim() : '';
+        if (customCat) {
+          if (!settings.customCategories) settings.customCategories = [];
+          if (!settings.customCategories.includes(customCat) && !DEFAULT_CATEGORIES.includes(customCat)) {
+            settings.customCategories.push(customCat);
+          }
+          catVal = customCat;
+        } else {
+          catVal = 'Other';
+        }
+      }
 
-    const link = document.createElement('a');
-    link.download = 'subtrack_snapshot.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-  });
+      const formData = {
+        name: nameVal,
+        cost: costVal,
+        currency: subCurrencyInput ? subCurrencyInput.value : 'NGN',
+        cycle: subCycleInput ? subCycleInput.value : 'monthly',
+        category: catVal,
+        priority: subPriorityInput ? subPriorityInput.value : 'Must-have',
+        trialEndDate: subTrialDateInput && subTrialDateInput.value ? subTrialDateInput.value : null,
+        nextPaymentDate: subDateInput && subDateInput.value ? subDateInput.value : null
+      };
+
+      if (editingId) {
+        editSubscription(editingId, formData);
+        resetForm();
+      } else {
+        addSubscription(formData);
+        if (subForm) subForm.reset();
+        if (customCategoryInput) customCategoryInput.classList.add('hidden');
+      }
+    });
+  }
+
+  if (cancelEditBtn) cancelEditBtn.addEventListener('click', () => resetForm());
+
+  if (searchInput) searchInput.addEventListener('input', () => renderApp());
+  if (sortSelect) sortSelect.addEventListener('change', () => renderApp());
+  if (exportCsvBtn) {
+    exportCsvBtn.addEventListener('click', () => {
+      let csvContent = "data:text/csv;charset=utf-8,Name,Cost,Currency,Cycle,Category,Priority,NextPaymentDate,Paused\n";
+      subscriptions.forEach(s => {
+        csvContent += `"${s.name}",${s.cost},${s.currency || 'NGN'},${s.cycle},"${s.category}","${s.priority}",${s.nextPaymentDate || ''},${s.paused}\n`;
+      });
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "subtrack_export.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+
+  if (subscriptionsGrid) {
+    subscriptionsGrid.addEventListener('click', (e) => {
+      const target = e.target;
+      const card = target.closest('.sub-card');
+      if (!card) return;
+      const id = card.getAttribute('data-id');
+
+      const editBtn = target.classList.contains('edit-btn') ? target : target.closest('.edit-btn');
+      if (editBtn) {
+        const sub = subscriptions.find(s => s.id === id);
+        if (sub) {
+          editingId = sub.id;
+          if (subIdInput) subIdInput.value = sub.id;
+          if (subNameInput) subNameInput.value = sub.name;
+          if (subCostInput) subCostInput.value = sub.cost;
+          if (subCurrencyInput) subCurrencyInput.value = sub.currency || 'NGN';
+          if (subCycleInput) subCycleInput.value = sub.cycle;
+          
+          const allCats = [...DEFAULT_CATEGORIES, ...(settings.customCategories || [])];
+          if (!allCats.includes(sub.category)) {
+            settings.customCategories.push(sub.category);
+            updateCategoryDropdown();
+          }
+          if (subCategoryInput) subCategoryInput.value = sub.category;
+          if (customCategoryInput) customCategoryInput.classList.add('hidden');
+
+          if (subPriorityInput) subPriorityInput.value = sub.priority || 'Must-have';
+          if (subTrialDateInput) subTrialDateInput.value = sub.trialEndDate || '';
+          if (subDateInput) subDateInput.value = sub.nextPaymentDate || '';
+
+          if (formTitle) formTitle.textContent = 'Edit Subscription';
+          if (submitBtn) submitBtn.textContent = 'Save Changes';
+          if (cancelEditBtn) cancelEditBtn.classList.remove('hidden');
+          const formSection = document.getElementById('formSection');
+          if (formSection) formSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+
+      if (target.classList.contains('pause-btn')) {
+        togglePauseSubscription(id);
+      }
+
+      if (target.classList.contains('delete-prompt-btn')) {
+        card.classList.add('delete-confirm');
+        const sub = subscriptions.find(s => s.id === id);
+        card.innerHTML = `
+          <div class="delete-confirm-content">
+            <p>Delete "${escapeHtml(sub ? sub.name : 'this item')}"?</p>
+            <div class="delete-confirm-actions">
+              <button type="button" class="btn btn-danger btn-sm confirm-yes" data-id="${id}">Yes, Delete</button>
+              <button type="button" class="btn btn-secondary btn-sm confirm-no" data-id="${id}">Cancel</button>
+            </div>
+          </div>
+        `;
+      }
+
+      if (target.classList.contains('confirm-yes')) {
+        deleteSubscription(id);
+        if (editingId === id) resetForm();
+      }
+
+      if (target.classList.contains('confirm-no')) {
+        renderApp();
+      }
+    });
+  }
+
+  if (cancelCandidatesList) {
+    cancelCandidatesList.addEventListener('click', (e) => {
+      if (e.target.classList.contains('pause-cand-btn')) {
+        const id = e.target.getAttribute('data-id');
+        togglePauseSubscription(id);
+      }
+    });
+  }
+
+  if (copySnapshotBtn) {
+    copySnapshotBtn.addEventListener('click', () => {
+      const text = snapshotBody ? snapshotBody.innerText : '';
+      navigator.clipboard.writeText(text).then(() => {
+        if (copyToast) {
+          copyToast.classList.remove('hidden');
+          setTimeout(() => copyToast.classList.add('hidden'), 2000);
+        }
+      });
+    });
+  }
+
+  if (downloadSnapshotImgBtn) {
+    downloadSnapshotImgBtn.addEventListener('click', () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 600;
+      canvas.height = 300;
+      const ctx = canvas.getContext('2d');
+
+      const grad = ctx.createLinearGradient(0, 0, 600, 300);
+      grad.addColorStop(0, settings.darkMode ? '#1E293B' : '#16274F');
+      grad.addColorStop(1, settings.darkMode ? '#0F172A' : '#24396B');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 600, 300);
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 24px system-ui';
+      ctx.fillText('SubTrack Spending Snapshot', 40, 50);
+
+      ctx.font = '16px system-ui';
+      ctx.fillStyle = '#E2E8F0';
+      const totals = calculateTotals(subscriptions);
+      const activeCount = subscriptions.filter(s => !s.paused).length;
+      const text1 = `Active Subscriptions: ${activeCount}`;
+      const text2 = `Monthly Spend: ${formatMoney(totals.monthly)}`;
+      const text3 = `Yearly Spend: ${formatMoney(totals.yearly)}`;
+
+      ctx.fillText(text1, 40, 110);
+      ctx.fillText(text2, 40, 150);
+      ctx.fillText(text3, 40, 190);
+
+      ctx.font = 'italic 12px system-ui';
+      ctx.fillStyle = '#94A3B8';
+      ctx.fillText('Generated with SubTrack — Private Subscription Manager', 40, 260);
+
+      const link = document.createElement('a');
+      link.download = 'subtrack_snapshot.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  }
 }
 
 function resetForm() {
@@ -965,7 +1007,8 @@ function resetForm() {
   document.querySelectorAll('.form-group').forEach(g => g.classList.remove('invalid'));
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function initApp() {
+  initDOMElements();
   loadState();
   bindEvents();
   applyTheme();
@@ -973,4 +1016,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (sessionStorage.getItem(STORAGE_KEY_LANDING) === 'true') {
     renderApp();
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+} else {
+  initApp();
+}

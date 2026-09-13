@@ -35,3 +35,22 @@ subtrack/
 ├── metadata.json         # App metadata and frame permissions
 ├── package.json          # Dependencies and script definitions
 └── vite.config.ts        # Vite configuration
+```
+
+---
+
+## ⚙️ Getting Started & Development
+
+1. **Clone or Open the Project** in your development environment.
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+3. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
+4. **Build for Production**:
+   ```bash
+   npm run build
+   ```
